@@ -7,11 +7,14 @@ gem 'pg', '0.17.1'
 
 group :development, :test do
   #gem 'sqlite3', '1.3.8'
+  gem 'guard-rspec'
   gem 'rspec-rails', '2.13.1'
 end
 
 group :test do
+  gem 'minitest'
   gem 'selenium-webdriver', '2.35.1'
+  gem 'libnotify', '0.8.0'
   gem 'capybara', '2.1.0'
 end
 
