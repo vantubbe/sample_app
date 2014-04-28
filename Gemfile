@@ -7,7 +7,8 @@ gem 'pg', '0.17.1'
 
 group :development, :test do
   #gem 'sqlite3', '1.3.8'
-  gem 'guard-rspec'
+  gem 'guard', '2.2.5'
+  gem 'guard-rspec', '2.5.0'
   gem 'rspec-rails', '2.13.1'
 end
 
