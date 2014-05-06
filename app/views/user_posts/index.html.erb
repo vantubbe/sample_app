@@ -1,0 +1,25 @@
+<% provide(:title, 'Posts') %>
+<h1>User Posts</h1>
+
+<% @user_posts.each do |user_post| %>
+    <% user = User.find_by(id: user_post.user_id) %>
+    <div class="row">
+      <aside class="span3">
+        <section>
+          <h1>
+            <%= gravatar_for user %>
+            <%= user.name %>
+          </h1>
+        </section>
+      </aside>
+      <aside class="span4">
+        <section>
+            <div><%= user_post.message %></div>
+        </section>
+      </aside>
+    </div>
+<% end %>
+
+<br>
+
+<%= link_to 'Create new post', new_user_post_path %>

@@ -1,0 +1,13 @@
+<% provide(:title, 'Create New Post') %>
+<h1>Post Message</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%=	 form_for(@user_post) do |f| %>
+        <%= f.label :message %>
+        <%= f.text_area :message %>
+
+        <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

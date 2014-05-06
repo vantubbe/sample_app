@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140505171624) do
+ActiveRecord::Schema.define(version: 20140506020534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "user_posts", force: true do |t|
+    t.integer  "user_id"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_posts", ["user_id"], name: "index_user_posts_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
