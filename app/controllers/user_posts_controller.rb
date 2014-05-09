@@ -1,6 +1,7 @@
 include SessionsHelper
 
 class UserPostsController < ApplicationController
+  before_action :signed_in_user, only: [:new, :create, :edit,:update]
   before_action :set_user_post, only: [:show, :show_users_posts ,:edit, :update, :destroy]
 
   # GET /user_posts
@@ -9,8 +10,6 @@ class UserPostsController < ApplicationController
     @user_posts = UserPost.all
   end
 
-  # GET /user_posts/1
-  # GET /user_posts/1.json
   def show
   end
 
