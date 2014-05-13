@@ -92,6 +92,21 @@ describe 'Authentication' do
       end
     end
 
+    describe "as non-admin user" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
+
+      before do
+        sign_in non_admin
+      end
+
+      # describe "submitting a DELETE request to the Users#destroy action" do
+      #   it "should note delete a user" do
+      #     expect { delete user_path(user) }.to change(User, :count).by(0)
+      #   end
+      # end
+    end
+
     # describe "as wrong user" do
     #   let(:user) { FactoryGirl.create(:user) }
     #   let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
