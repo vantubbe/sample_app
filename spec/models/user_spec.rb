@@ -19,6 +19,8 @@ describe User do
   it { should respond_to(:password_confirmation)}
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
+  it { should respond_to(:user_posts)}
+  it { should respond_to(:feed) }
 
   it { should be_valid }
   it { should_not be_admin}
@@ -134,8 +136,43 @@ describe User do
       @user.toggle!(:admin)
     end
 
-
     it { should be_admin }
+  end
+  
+    #--------------------Microposts------------------------
+
+  describe "micropost associations" do
+    before {@user.save}
+    let!(:older_user_post) do
+      FactoryGirl.create(:user_post, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_user_post) do
+      FactoryGirl.create(:user_post, user: @user, created_at: 1.hour.ago) 
+    end
+    
+    it "should have the right microposts in the right order" do
+      expect(@user.user_posts.to_a).to eq [newer_user_post, older_user_post]
+    end
+    
+    it "should destroy associated microposts" do
+      userposts = @user.user_posts.to_a
+      @user.destroy
+      expect(userposts).not_to be_empty
+      userposts.each do |user_post|
+        expect(UserPost.where(id: user_post.id)).to be_empty
+      end
+    end
+    
+    describe "status" do
+      let(:unfollowed_post) do
+        FactoryGirl.create(:user_post, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_user_post) }
+      its(:feed) { should include(older_user_post) }
+      its(:feed) { should_not include(unfollowed_post) }
+    end
+    
   end
 
 end

@@ -1,4 +1,6 @@
 class UserPost < ActiveRecord::Base
-  validates :message, length: {minimum: 1, maximum: 150}
-
+  validates :message, presence: true, length: {maximum: 140}
+  validates :user_id, presence: true
+  default_scope -> {order('created_at desc')}
+  belongs_to :user
 end

@@ -1,8 +1,9 @@
 include SessionsHelper
 
 class UserPostsController < ApplicationController
-  before_action :signed_in_user, only: [:new, :create, :edit,:update]
-  before_action :set_user_post, only: [:show, :show_users_posts ,:edit, :update, :destroy]
+  before_action :signed_in_user, only: [:create, :destroy]
+  before_action :correct_user,   only: :destroy
+  #before_action :set_user_post, only: [:show, :show_users_posts ,:edit, :update, :destroy]
 
   # GET /user_posts
   # GET /user_posts.json
@@ -29,14 +30,14 @@ class UserPostsController < ApplicationController
   # POST /user_posts
   # POST /user_posts.json
   def create
-    @user_post = UserPost.new(user_post_params)
-    @user_post.user_id = current_user.id
-
+    @user_post = current_user.user_posts.build(user_post_params)
+    
     if @user_post.save
       flash[:success] = "User post was successfully created."
-      redirect_to @user_post
+      redirect_to root_url
     else
-      render 'new'
+      @feed_items = []
+      render 'static_pages/home'
     end
   end
 
@@ -58,10 +59,7 @@ class UserPostsController < ApplicationController
   # DELETE /user_posts/1.json
   def destroy
     @user_post.destroy
-    respond_to do |format|
-      format.html { redirect_to user_posts_url }
-      format.json { head :no_content }
-    end
+    redirect_to root_url
   end
 
   private
@@ -70,8 +68,13 @@ class UserPostsController < ApplicationController
       @user_post = UserPost.find(params[:id])
     end
 
+    def correct_user
+      @user_post = current_user.user_posts.find_by(id: params[:id])
+      redirect_to root_url if @user_post.nil?
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_post_params
-      params.require(:user_post).permit(:user_id, :message)
+      params.require(:user_post).permit(:message)
     end
 end

@@ -15,5 +15,12 @@ namespace :db do
                    password: password,
                    password_confirmation: password)
     end
+    
+    users = User.take(6)
+    50.times do
+      message = Faker::Lorem.sentence(5)
+      users.each {|user| user.user_posts.create!(message: message)}
+    end
+    
   end
 end

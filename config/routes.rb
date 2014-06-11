@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :user_posts
   resources :users
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions,   only: [:new, :create, :destroy]
+  resources :user_posts, only: [:create, :destroy]
 
   root 'static_pages#home'
   match '/help',      to: 'static_pages#help',            via: 'get'

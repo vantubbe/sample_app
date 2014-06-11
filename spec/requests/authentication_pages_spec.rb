@@ -90,6 +90,23 @@ describe 'Authentication' do
         # end
 
       end
+      
+      describe "in the user_posts controller" do
+        
+        # describe "submitting to the create action" do
+          # before {post user_posts_path}
+          # specify {expect(response).to redirect_to(signin_path)}
+        # end
+         
+        # describe "submitting to the destroy action" do
+          # before {delete user_post_path(FactoryGirl.create(:user_post)) }
+          # specify {expect(response).to redirect_to(signin_path) }
+        # end
+        
+      end
+      
+      
+      
     end
 
     describe "as non-admin user" do
